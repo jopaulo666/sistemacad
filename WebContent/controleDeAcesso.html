@@ -1,0 +1,44 @@
+<!-- cabeçalho -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Academia Pão com Ovo</title>
+<link rel="stylesheet"type="text/css" href="css/SistemAcad_Estilo.css">
+</head>
+<body>
+	<header>
+		<img alt="" src="images/Loucademia_Logotipo.png">
+<!-- 		menu -->
+		<nav>
+			<div>
+				<a href="novoAluno.html">Novo Aluno</a><br>
+				<a href="pesquisaDeAluno.html#">Pesquisa de aluno</a><br>
+				<a href="controleDeAcesso.html">Controle de acesso</a><br>
+				<a href="relatoriosEntradaSaida.html">Relatórios de entradas e saidas</a><br>
+				<a href="relatoriosSituacoes.html">Relatórios de situações</a><br>
+			</div>
+		</nav>
+	</header>
+	
+	<h1>Controle de Acesso</h1>
+	
+	<div id="infoMensager">
+		(mensagem de sucesso ou erro)
+	</div>
+	
+	<br>
+	
+	<form action="">
+		<fieldset>
+			<legend>Parâmetros da Acesso</legend>
+			<label for="cod">Código:</label> <br>
+			<input type="text" name="cod" id="cod"> <br><br>
+			<label for="cpf">CPF:</label> <br>
+			<input type="text" name="cpf" id="cpf">		
+		</fieldset>
+	</form>
+	<br>
+	<input type="submit" value="Registrar acesso">
+</body>
+</html>
