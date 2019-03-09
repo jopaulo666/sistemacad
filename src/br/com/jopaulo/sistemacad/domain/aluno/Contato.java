@@ -1,11 +1,27 @@
 package br.com.jopaulo.sistemacad.domain.aluno;
 
-public class Contato {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+//compartilha o Id
+@Embeddable
+public class Contato implements Serializable {
 	
+	@Column(name = "email", nullable = true, length = 64)
 	private String email;
+	
+	@Column(name = "ddd_celular", nullable = false, length = 2)
 	private Integer dddCelular;
+	
+	@Column(name = "numero_celular", nullable = false, length = 9)
 	private Integer numeroCelular;
+	
+	@Column(name = "ddd_fixo", nullable = true, length = 2)
 	private Integer dddfixo;
+	
+	@Column(name = "numero_fixo", nullable = true, length = 9)
 	private Integer numeroFixo;
 	
 	public String getEmail() {

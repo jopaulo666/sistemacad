@@ -1,59 +1,104 @@
 package br.com.jopaulo.sistemacad.domain.aluno;
 
-public class Endereco {
-	
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Embeddable
+public class Endereco implements Serializable {
+
+	@Column(name = "rua", nullable = false, length = 128)
 	private String rua;
+
+	@Column(name = "numero", nullable = false, length = 6)
 	private Integer numero;
-	private String complemento;
+
+	@Column(name = "bairro", nullable = false, length = 64)
+	private String bairro;
+
+	@Column(name = "cidade", nullable = false, length = 64)
 	private String cidade;
-	private Estado estado = new Estado();
+
+	@Column(name = "cep", nullable = false, length = 8)
 	private Integer cep;
 	
-	public String getRua() {
-		return rua;
-	}
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-	public Integer getNumero() {
-		return numero;
-	}
-	public void setNumero(Integer numero) {
-		this.numero = numero;
-	}
+	@Column(name = "complemento", nullable = true, length = 32)
+	private String complemento;
+
 	public String getComplemento() {
 		return complemento;
 	}
+
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+
+	@ManyToOne
+	@JoinColumn(name = "estado_id", nullable = false)
+	private Estado estado = new Estado();
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
 	public String getCidade() {
 		return cidade;
 	}
+
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	public Estado getEstado() {
-		return estado;
-	}
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
+
 	public Integer getCep() {
 		return cep;
 	}
+
 	public void setCep(Integer cep) {
 		this.cep = cep;
 	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
-		return "Endereco [rua=" + rua + ", numero=" + numero + ", complemento=" + complemento + ", cidade=" + cidade
-				+ ", estado=" + estado + ", cep=" + cep + "]";
+		return "Endereco [rua=" + rua + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", cep="
+				+ cep + ", complemento=" + complemento + ", estado=" + estado + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((bairro == null) ? 0 : bairro.hashCode());
 		result = prime * result + ((cep == null) ? 0 : cep.hashCode());
 		result = prime * result + ((cidade == null) ? 0 : cidade.hashCode());
 		result = prime * result + ((complemento == null) ? 0 : complemento.hashCode());
@@ -62,6 +107,7 @@ public class Endereco {
 		result = prime * result + ((rua == null) ? 0 : rua.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,6 +117,11 @@ public class Endereco {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
+		if (bairro == null) {
+			if (other.bairro != null)
+				return false;
+		} else if (!bairro.equals(other.bairro))
+			return false;
 		if (cep == null) {
 			if (other.cep != null)
 				return false;
@@ -102,6 +153,6 @@ public class Endereco {
 		} else if (!rua.equals(other.rua))
 			return false;
 		return true;
-	}
-	
+	}	
+
 }

@@ -1,8 +1,21 @@
 package br.com.jopaulo.sistemacad.domain.aluno;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Year;
 
-public class Aluno {
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import br.com.jopaulo.sistemacad.application.util.StringUtils;
+
+@Entity
+@Table(name = "aluno")
+public class Aluno implements Serializable{
 	
 	public enum Situacao{
 		Ativo, Inativo, Pendente;
@@ -10,21 +23,55 @@ public class Aluno {
 	public enum Sexo{
 		Masculino, Feminino;
 	}
-	private String codigo;
+	
+	@Id
+	@Column(name = "id", nullable = false, length = 8)
+	private String matricula;
+	
+	@Column(name = "nome", nullable = false, length = 64)
 	private String nome;
+	
+	@Enumerated
+	@Column(name = "sexo", nullable = false, length = 1)
 	private Sexo sexo;
-	private Integer rg;
-	private Integer cpf;
+	
+	@Column(name = "rg", nullable = true, length = 10)
+	private String rg;
+	
+	@Column(name = "cpf", nullable = false, length = 11)
+	private String cpf;
+	
+	@Column(name = "nascimento", nullable = false)
 	private LocalDate dataNascimento;
+	
+	@Enumerated
+	@Column(name = "situacao", nullable = false, length = 1)
 	private Situacao situacao;
+	
+	@Embedded //fazem parte da entidade aluno, vão comprtilhar o mesmo id q aluno
 	private Contato contato = new Contato();
+	
+	@Embedded // pega o id de outra classe
 	private Endereco endereco = new Endereco();
 	
-	public String getCodigo() {
-		return codigo;
+	public void gerarMatricula(String maxMatricula) {
+		Year year = Year.now();
+		
+		if (maxMatricula == null) {
+			maxMatricula = year + StringUtils.leftZeroes(0, 4);
+		}
+		
+		int sequential = Integer.parseInt(maxMatricula.substring(4));
+		sequential++;
+		
+		this.matricula = year + StringUtils.leftZeroes(sequential, 4);
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	
+	public String getMatricula() {
+		return matricula;
+	}
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 	public String getNome() {
 		return nome;
@@ -38,16 +85,16 @@ public class Aluno {
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
-	public Integer getRg() {
+	public String getRg() {
 		return rg;
 	}
-	public void setRg(Integer rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
-	public Integer getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(Integer cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public LocalDate getDataNascimento() {
@@ -77,7 +124,7 @@ public class Aluno {
 	
 	@Override
 	public String toString() {
-		return "Aluno [codigo=" + codigo + ", nome=" + nome + ", sexo=" + sexo + ", rg=" + rg + ", cpf=" + cpf
+		return "Aluno [codigo=" + matricula + ", nome=" + nome + ", sexo=" + sexo + ", rg=" + rg + ", cpf=" + cpf
 				+ ", dataNascimento=" + dataNascimento + ", situacao=" + situacao + ", contato=" + contato
 				+ ", endereco=" + endereco + "]";
 	}
@@ -86,7 +133,7 @@ public class Aluno {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
 		return result;
 	}
 	
@@ -99,10 +146,10 @@ public class Aluno {
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
+		if (matricula == null) {
+			if (other.matricula != null)
 				return false;
-		} else if (!codigo.equals(other.codigo))
+		} else if (!matricula.equals(other.matricula))
 			return false;
 		return true;
 	}
