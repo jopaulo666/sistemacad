@@ -7,22 +7,12 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf" lang="pt-br">
 
 <ui:composition template="layout.xhtml">
+	<ui:param name="title" value="#{alunoBean.titulo}" />
 	<f:metadata>
 		<f:viewParam name="matricula" value="#{alunoBean.matricula}" />
 		<f:viewAction action="#{alunoBean.carregar}" />
 	</f:metadata>
-
 	<ui:define name="conteudo">
-		<h1>#{alunoBean.titulo}</h1>
-
-		<h:panelGroup rendered="#{!facesContext.messageList.isEmpty()}">
-			<div id="infoMensager">
-				<h:messages />
-			</div>
-		</h:panelGroup>
-
-		<br />
-
 		<form jsf:id="form">
 			<input type="hidden" jsf:value="#{alunoBean.aluno.matricula}" />
 			<!-- borda que delimita campos / ctr + f => substitui-->
@@ -64,8 +54,8 @@
 
 			<fieldset>
 				<legend>Situação</legend>
-				<label for="situacao">Situação</label><br /> <select
-					jsf:value="#{alunoBean.aluno.situacao}" id="situacao" size="0">
+				<label for="situacao">Situação</label><br />
+				<select	jsf:value="#{alunoBean.aluno.situacao}" id="situacao" size="0">
 					<f:selectItems value="#{dataBean.situacoes}" />
 				</select>
 			</fieldset>
@@ -129,7 +119,7 @@
 				<legend>Contato</legend>
 				<label for="email">E-mail</label><br />
 				<input type="text"	jsf:value="#{alunoBean.aluno.contato.email}" id="email"
-					maxlength="64" jsf:label="E-mail" placeholder="Ex: fulano@exemplo.com">
+					maxlength="64" jsf:label="E-mail" placeholder="aluno@exemplo.com">
 					<f:validateLength maximum="64" />
 					<f:validateRegex pattern=".+@.+" />
 				</input>
@@ -154,14 +144,15 @@
 				</input> &#160;
 				<input type="tel" jsf:value="#{alunoBean.aluno.contato.numeroFixo}"
 					id="telefoneFixoNumero" maxlength="9" jsf:label="Telefone fixo" placeholder="99999999">
-
-				<f:validateLongRange minimum="10000000" maximum="999999999" /></input>
+					<f:validateLongRange minimum="10000000" maximum="999999999" />
+				</input>
 
 			</fieldset>
-
-			<br /> <input type="submit" value="Gravar"
-				jsf:action="#{alunoBean.gravar}" />&#160; <input type="button"
-				value="Relatório de acesso" />
+			<br />
+			<input type="submit" value="Gravar" jsf:action="#{alunoBean.gravar}" />&#160;
+			<input type="button" value="Relatório de entradas e saídas"
+				jsf:outcome="relatoriosEntradaSaida?matricula=#{alunoBean.aluno.matricula}" 
+				jsf:rendered="#{alunoBean.matricula != null}"/>
 		</form>
 	</ui:define>
 </ui:composition>

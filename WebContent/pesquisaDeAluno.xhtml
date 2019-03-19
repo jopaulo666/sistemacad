@@ -7,26 +7,23 @@
 	xmlns:jsf="http://xmlns.jcp.org/jsf" lang="pt-br">
 
 <ui:composition template="layout.xhtml">
+	<ui:param name="title" value="Pesquisa de Alunos" />
 	<ui:define name="conteudo">
-
-		<h1>Pesquisa de aluno</h1>
-
-		<h:panelGroup rendered="#{!facesContext.messageList.isEmpty()}">
-			<div id="infoMensager">
-				<h:messages />
-			</div>
-		</h:panelGroup>
-
-		<br />
+		<f:metadata>
+			<f:viewAction action="#{pesquisaAlunoBean.check}"/>
+		</f:metadata>
+		
 		<form jsf:id="form">
 			<fieldset>
 				<legend>Parâmetros da Pesquisa</legend>
 				<label for="id">Matrícula:</label> <br /> 
-				<input type="text" jsf:value="#{pesquisaAlunoBean.matricula}" id="id" /><br /> 
+				<input type="text" jsf:value="#{pesquisaAlunoBean.matricula}" id="id" jsf:label="Matrícula"
+					placeholder="Somente números" maxlength="8"/><br /> 
 				<label for="nome">Nome:</label>	<br /> 
-				<input type="text" jsf:value="#{pesquisaAlunoBean.nome}" id="nome" placeholder="Teste"/><br /> 
+				<input type="text" jsf:value="#{pesquisaAlunoBean.nome}" id="nome" placeholder="Nome aproximado"/><br /> 
 				<label for="cpf">CPF:</label> <br />
-				 <input type="text" jsf:value="#{pesquisaAlunoBean.cpf}" id="cpf" />
+				 <input type="text" jsf:value="#{pesquisaAlunoBean.cpf}" id="cpf" jsf:label="CPF"
+				 	placeholder="Somente números" maxlength="11"/>
 			</fieldset>
 			<br /> 
 			<input type="submit" value="Pesquisar" jsf:action="#{pesquisaAlunoBean.pesquisar}"/>

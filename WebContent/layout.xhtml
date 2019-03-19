@@ -20,14 +20,24 @@
 		<nav>
 			<div>
 				<a jsf:outcome="dadosAlunos">Novo Aluno</a><br/>
-				<a jsf:outcome="pesquisaDeAluno">Pesquisa de aluno</a><br/>
+				<a jsf:outcome="pesquisaDeAluno?clear=true">Pesquisa de aluno</a><br/>
 				<a jsf:outcome="controleDeAcesso">Controle de acesso</a><br/>
 				<a jsf:outcome="relatoriosEntradaSaida">Relatórios de entradas e saidas</a><br/>
-				<a jsf:outcome="relatoriosSituacoes">Relatórios de situações</a><br/>
+				<a jsf:outcome="relatoriosSituacoes?clear=true">Relatórios de situações</a><br/>
 			</div>
 		</nav>
 	</header>
 <!-- 	cabeçalho fim -->
+	
+	<h1>#{title}</h1>
+	
+		<h:panelGroup rendered="#{!facesContext.messageList.isEmpty()}">
+		<div id="infoMensager">
+			<h:messages />
+		</div>
+		</h:panelGroup>	
+		<br/>
+	
 	<ui:insert name="conteudo"/>
 </body>
 </html>

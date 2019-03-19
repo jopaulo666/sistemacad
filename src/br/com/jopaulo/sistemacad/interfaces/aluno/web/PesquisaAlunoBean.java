@@ -2,9 +2,11 @@ package br.com.jopaulo.sistemacad.interfaces.aluno.web;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.annotation.RequestParameterMap;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -24,11 +26,25 @@ public class PesquisaAlunoBean implements Serializable{
 	@Inject
 	private FacesContext facesContext;
 	
+	@Inject
+	@RequestParameterMap
+	private Map<String, String> requestParamsMap;
+	
 	private String matricula;
 	private String nome;
 	private String cpf;
 	
 	private List<Aluno> alunos;
+	
+	public void check() {
+		String clear = requestParamsMap.get("clear");
+		if (clear != null && Boolean.valueOf(clear)) {
+			matricula = null;
+			nome = null;
+			cpf = null;
+			alunos = null;
+		}
+	}
 	
 	public String pesquisar() {
 		try {

@@ -1,6 +1,7 @@
 package br.com.jopaulo.sistemacad.domain.acesso;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -32,6 +33,38 @@ public class Acesso implements Serializable {
 	
 	@Column(name = "saida", nullable = true)
 	private LocalDateTime saida;
+	
+	public boolean isEntradaSaidaPreenchidas() {
+		if (entrada != null && saida != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public TipoAcesso registrarAcesso() {
+		LocalDateTime now = LocalDateTime.now();
+		TipoAcesso tipoAcesso;
+		
+		if (entrada == null) {
+			entrada = now;
+			tipoAcesso = TipoAcesso.Entrada;
+		} else if (saida == null) {
+			saida = now;
+			tipoAcesso = TipoAcesso.Saida;
+		} else {
+			tipoAcesso = null;
+		}
+		return tipoAcesso;
+	}
+	
+	public String calcularDuracao() {
+		if (entrada == null || saida == null) {
+			return null;
+		}
+		
+		Duration duration = Duration.between(entrada, saida);
+		return String.format("%02d:%02d", duration.toHours(), duration.toMinutes());
+	}
 	
 	public Integer getId() {
 		return id;
